@@ -1,24 +1,25 @@
-
+import os
 from flask import Flask, render_template, request, redirect
 import mysql.connector
 
 app = Flask(__name__)
 
 
-
 def conectar_bd():
     return mysql.connector.connect(
-        host="localhost",
-        user="root",
-        password="",
-        database="practica_flask",
+        host=os.getenv("MYSQLHOST", "localhost"),
+        port=int(os.getenv("MYSQLPORT", "3306")),
+        user=os.getenv("MYSQLUSER", "root"),
+        password=os.getenv("MYSQLPASSWORD", ""),
+        database=os.getenv("MYSQLDATABASE", "practica_flask"),
         connection_timeout=5
     )
 
 
 
+
 @app.route("/")
-def inicio():
+def inicio():   
     return render_template("productos.html")
 
 
