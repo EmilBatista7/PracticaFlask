@@ -1,0 +1,33 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registro de productos</title>
+</head>
+<body>
+
+    <h1>Registro de productos</h1>
+
+    <form action="/registrar" method="POST">
+        <label>Nombre del producto:</label>
+        <input type="text" name="nombre" required>
+        <br><br>
+
+        <label>Precio:</label>
+        <input type="number" name="precio" min="0.01"
+               step="0.01" required>
+        <br><br>
+
+        <label>Stock:</label>
+        <input type="number" name="stock" min="0" required>
+        <br><br>
+
+        <button type="submit">Guardar producto</button>
+    </form>
+
+    <p><a href="/productos">Ver productos registrados</a></p>
+
+</body>
+</html>
