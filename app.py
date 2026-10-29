@@ -1,20 +1,24 @@
-import os
-from flask import Flask, render_template, request, redirect
-import mysql.connector
-
-app = Flask(__name__)
-
 
 def conectar_bd():
-    return mysql.connector.connect(
-        host=os.getenv("MYSQLHOST", "localhost"),
-        port=int(os.getenv("MYSQLPORT", "3306")),
-        user=os.getenv("MYSQLUSER", "root"),
-        password=os.getenv("MYSQLPASSWORD", ""),
-        database=os.getenv("MYSQLDATABASE", "practica_flask"),
-        connection_timeout=5
-    )
+    host = os.getenv("MYSQLHOST")
+    puerto = os.getenv("MYSQLPORT")
+    usuario = os.getenv("MYSQLUSER")
+    password = os.getenv("MYSQLPASSWORD")
+    base_datos = os.getenv("MYSQLDATABASE")
 
+    if not all([host, puerto, usuario, password, base_datos]):
+        raise RuntimeError(
+            "Faltan variables de conexión a MySQL en Railway."
+        )
+
+    return mysql.connector.connect(
+        host=host,
+        port=int(puerto),
+        user=usuario,
+        password=password,
+        database=base_datos,
+        connection_timeout=10
+    )
 
 
 
