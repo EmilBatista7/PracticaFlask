@@ -4,30 +4,352 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Registro de productos</title>
+
+    <title>PracticaFlask | Gestión de productos</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            background: #f3f6f4;
+            color: #24352b;
+            min-height: 100vh;
+        }
+
+        header {
+            background: #173f2b;
+            color: white;
+            padding: 22px 8%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .logo {
+            font-size: 23px;
+            font-weight: bold;
+            letter-spacing: 0.3px;
+        }
+
+        .logo span {
+            color: #a8dfb5;
+        }
+
+        header p {
+            font-size: 13px;
+            color: #d6e7db;
+            margin-top: 5px;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            margin-left: 18px;
+            font-size: 14px;
+        }
+
+        nav a:hover {
+            color: #a8dfb5;
+        }
+
+        main {
+            width: 90%;
+            max-width: 1050px;
+            margin: 45px auto;
+        }
+
+        .bienvenida {
+            margin-bottom: 30px;
+        }
+
+        .bienvenida small {
+            color: #39794f;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+        }
+
+        .bienvenida h1 {
+            font-size: 32px;
+            margin: 12px 0;
+            color: #173f2b;
+        }
+
+        .bienvenida p {
+            color: #69776d;
+            line-height: 1.6;
+        }
+
+        .contenido {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 25px;
+            align-items: stretch;
+        }
+
+        .tarjeta {
+            background: white;
+            padding: 30px;
+            border-radius: 14px;
+            border: 1px solid #e1e9e3;
+            box-shadow: 0 6px 22px rgba(24, 60, 37, 0.05);
+        }
+
+        .tarjeta h2 {
+            color: #204d32;
+            font-size: 21px;
+            margin-bottom: 10px;
+        }
+
+        .descripcion {
+            font-size: 14px;
+            color: #748078;
+            line-height: 1.6;
+            margin-bottom: 25px;
+        }
+
+        .grupo {
+            margin-bottom: 19px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+        input {
+            width: 100%;
+            padding: 13px;
+            border: 1px solid #d6e0d8;
+            border-radius: 8px;
+            font-size: 15px;
+            background: #fcfdfc;
+        }
+
+        input:focus {
+            outline: 2px solid #b8dfc2;
+            border-color: #39794f;
+        }
+
+        button {
+            width: 100%;
+            padding: 14px;
+            background: #267345;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 15px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        button:hover {
+            background: #1b5934;
+        }
+
+        .panel-info {
+            background: #e6f2e9;
+            border-radius: 10px;
+            padding: 20px;
+            margin-top: 20px;
+        }
+
+        .panel-info h3 {
+            color: #245b37;
+            font-size: 16px;
+            margin-bottom: 8px;
+        }
+
+        .panel-info p {
+            font-size: 14px;
+            color: #526b59;
+            line-height: 1.6;
+        }
+
+        .acciones {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .accion-enlace {
+            display: block;
+            padding: 17px;
+            border: 1px solid #dce6de;
+            border-radius: 9px;
+            margin-top: 13px;
+            color: #245b37;
+            text-decoration: none;
+            font-weight: bold;
+            transition: background 0.2s;
+        }
+
+        .accion-enlace:hover {
+            background: #f0f7f1;
+        }
+
+        .accion-enlace span {
+            display: block;
+            font-size: 13px;
+            color: #748078;
+            font-weight: normal;
+            margin-top: 6px;
+        }
+
+        footer {
+            text-align: center;
+            padding: 25px 15px;
+            color: #758178;
+            font-size: 13px;
+            line-height: 1.8;
+        }
+
+        @media (max-width: 700px) {
+            header {
+                padding: 20px 5%;
+            }
+
+            nav a {
+                margin-left: 0;
+                margin-right: 14px;
+                display: inline-block;
+                margin-top: 8px;
+            }
+
+            main {
+                margin: 30px auto;
+            }
+
+            .contenido {
+                grid-template-columns: 1fr;
+            }
+
+            .bienvenida h1 {
+                font-size: 27px;
+            }
+
+            .tarjeta {
+                padding: 23px;
+            }
+        }
+    </style>
 </head>
+
 <body>
 
-    <h1>Registro de productos</h1>
+    <header>
+        <div>
+            <div class="logo">Practica<span>Flask</span></div>
+            <p>Sistema de gestión de productos</p>
+        </div>
 
-    <form action="/registrar" method="POST">
-        <label>Nombre del producto:</label>
-        <input type="text" name="nombre" required>
-        <br><br>
+        <nav>
+            <a href="/">Inicio</a>
+            <a href="/productos">Productos registrados</a>
+        </nav>
+    </header>
 
-        <label>Precio:</label>
-        <input type="number" name="precio" min="0.01"
-               step="0.01" required>
-        <br><br>
+    <main>
+        <section class="bienvenida">
+            <small>Panel de gestión</small>
+            <h1>Administración de productos</h1>
+            <p>
+                Registra y administra tus productos desde un solo lugar.
+                La información se almacena en la base de datos.
+            </p>
+        </section>
 
-        <label>Stock:</label>
-        <input type="number" name="stock" min="0" required>
-        <br><br>
+        <section class="contenido">
 
-        <button type="submit">Guardar producto</button>
-    </form>
+            <div class="tarjeta">
+                <h2>Registrar producto</h2>
+                <p class="descripcion">
+                    Completa los siguientes campos para agregar un producto
+                    al inventario.
+                </p>
 
-    <p><a href="/productos">Ver productos registrados</a></p>
+                <form action="/registrar" method="POST">
+                    <div class="grupo">
+                        <label for="nombre">Nombre del producto</label>
+                        <input
+                            type="text"
+                            id="nombre"
+                            name="nombre"
+                            placeholder="Ej. Bicarbonato"
+                            maxlength="255"
+                            required
+                        >
+                    </div>
+
+                    <div class="grupo">
+                        <label for="precio">Precio</label>
+                        <input
+                            type="number"
+                            id="precio"
+                            name="precio"
+                            placeholder="Ej. 4000"
+                            min="0.01"
+                            step="0.01"
+                            required
+                        >
+                    </div>
+
+                    <div class="grupo">
+                        <label for="stock">Cantidad disponible</label>
+                        <input
+                            type="number"
+                            id="stock"
+                            name="stock"
+                            placeholder="Ej. 12"
+                            min="0"
+                            step="1"
+                            required
+                        >
+                    </div>
+
+                    <button type="submit">Guardar producto</button>
+                </form>
+            </div>
+
+            <div class="tarjeta acciones">
+                <h2>Gestión del inventario</h2>
+                <p class="descripcion">
+                    Accede a las funciones principales de tu sistema.
+                </p>
+
+                <a class="accion-enlace" href="/productos">
+                    Consultar productos
+                    <span>Ver, editar y eliminar registros existentes.</span>
+                </a>
+
+                <div class="panel-info">
+                    <h3>Información del sistema</h3>
+                    <p>
+                        Los productos se registran en MySQL.
+                        Puedes consultar los datos guardados y realizar
+                        cambios desde el listado de productos.
+                    </p>
+                </div>
+            </div>
+
+        </section>
+    </main>
+
+    <footer>
+        <strong>PracticaFlask</strong><br>
+        Aplicación de gestión de productos<br>
+        Desarrollado con Python, Flask y MySQL
+    </footer>
 
 </body>
 </html>
