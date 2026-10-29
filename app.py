@@ -14,6 +14,7 @@ def diagnostico():
         "MYSQLUSER",
         "MYSQLPASSWORD",
         "MYSQLDATABASE"
+        "PRUEBA_VARIABLE"
     ]
 
     resultado = {
