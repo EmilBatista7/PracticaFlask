@@ -6,6 +6,27 @@ import mysql.connector
 app = Flask(__name__)
 
 
+@app.route("/diagnostico")
+def diagnostico():
+    nombres = [
+        "MYSQLHOST",
+        "MYSQLPORT",
+        "MYSQLUSER",
+        "MYSQLPASSWORD",
+        "MYSQLDATABASE"
+    ]
+
+    resultado = {
+        nombre: bool(os.getenv(nombre))
+        for nombre in nombres
+    }
+
+    resultado["entorno"] = os.getenv("RAILWAY_ENVIRONMENT_NAME", "no disponible")
+    resultado["servicio"] = os.getenv("RAILWAY_SERVICE_NAME", "no disponible")
+
+    return resultado
+
+
 def conectar_bd():
     host = os.getenv("MYSQLHOST")
     puerto = os.getenv("MYSQLPORT")
