@@ -1,3 +1,4 @@
+
 import os
 from flask import Flask, render_template, request, redirect
 import mysql.connector
@@ -12,11 +13,28 @@ def conectar_bd():
     password = os.getenv("MYSQLPASSWORD")
     base_datos = os.getenv("MYSQLDATABASE")
 
-    if not all([host, puerto, usuario, password, base_datos]):
+    # Comprobar las variables de conexión
+    variables = {
+        "MYSQLHOST": host,
+        "MYSQLPORT": puerto,
+        "MYSQLUSER": usuario,
+        "MYSQLPASSWORD": password,
+        "MYSQLDATABASE": base_datos
+    }
+
+    faltantes = [
+        nombre
+        for nombre, valor in variables.items()
+        if not valor
+    ]
+
+    if faltantes:
         raise RuntimeError(
-            "Faltan variables de conexión a MySQL en Railway."
+            "Variables de Railway vacías o no disponibles: "
+            + ", ".join(faltantes)
         )
 
+    # Conectar con MySQL
     return mysql.connector.connect(
         host=host,
         port=int(puerto),
@@ -27,11 +45,10 @@ def conectar_bd():
     )
 
 
-
-
 @app.route("/")
-def inicio():   
+def inicio():
     return render_template("productos.html")
+
 
 
 
