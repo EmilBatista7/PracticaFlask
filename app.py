@@ -1,3 +1,9 @@
+import os
+from flask import Flask, render_template, request, redirect
+import mysql.connector
+
+app = Flask(__name__)
+
 
 def conectar_bd():
     host = os.getenv("MYSQLHOST")
@@ -19,6 +25,7 @@ def conectar_bd():
         database=base_datos,
         connection_timeout=10
     )
+
 
 
 
