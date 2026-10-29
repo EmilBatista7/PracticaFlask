@@ -5,26 +5,26 @@ import mysql.connector
 app = Flask(__name__)
 
 
+def conectar_bd():
+    host = os.getenv("MYSQLHOST")
+    puerto = os.getenv("MYSQLPORT")
+    usuario = os.getenv("MYSQLUSER")
+    password = os.getenv("MYSQLPASSWORD")
+    base_datos = os.getenv("MYSQLDATABASE")
 
-variables = {
-    "MYSQLHOST": host,
-    "MYSQLPORT": puerto,
-    "MYSQLUSER": usuario,
-    "MYSQLPASSWORD": password,
-    "MYSQLDATABASE": base_datos
-}
+    if not all([host, puerto, usuario, password, base_datos]):
+        raise RuntimeError(
+            "Faltan variables de conexión a MySQL en Railway."
+        )
 
-faltantes = [
-    nombre for nombre, valor in variables.items()
-    if not valor
-]
-
-if faltantes:
-    raise RuntimeError(
-        "Variables de Railway vacías o no disponibles: "
-        + ", ".join(faltantes)
+    return mysql.connector.connect(
+        host=host,
+        port=int(puerto),
+        user=usuario,
+        password=password,
+        database=base_datos,
+        connection_timeout=10
     )
-
 
 
 
