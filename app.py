@@ -9,13 +9,13 @@ app = Flask(__name__)
 @app.route("/diagnostico")
 def diagnostico():
     nombres = [
-        "MYSQLHOST",
-        "MYSQLPORT",
-        "MYSQLUSER",
-        "MYSQLPASSWORD",
-        "MYSQLDATABASE"
-        "PRUEBA_VARIABLE"
-    ]
+    "MYSQLHOST",
+    "MYSQLPORT",
+    "MYSQLUSER",
+    "MYSQLPASSWORD",
+    "MYSQLDATABASE",
+    "PRUEBA_VARIABLE"
+]   
 
     resultado = {
         nombre: bool(os.getenv(nombre))
