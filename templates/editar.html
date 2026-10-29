@@ -1,34 +1,305 @@
+
 <!DOCTYPE html>
 <html lang="es">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Editar producto</title>
+
+    <title>PracticaFlask | Editar producto</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            background: #f3f6f4;
+            color: #24352b;
+            min-height: 100vh;
+        }
+
+        header {
+            background: #173f2b;
+            color: white;
+            padding: 22px 8%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .logo {
+            font-size: 23px;
+            font-weight: bold;
+        }
+
+        .logo span {
+            color: #a8dfb5;
+        }
+
+        header p {
+            margin-top: 5px;
+            font-size: 13px;
+            color: #d6e7db;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            margin-left: 18px;
+            font-size: 14px;
+        }
+
+        nav a:hover {
+            color: #a8dfb5;
+        }
+
+        main {
+            width: 90%;
+            max-width: 700px;
+            margin: 45px auto;
+        }
+
+        .encabezado {
+            margin-bottom: 25px;
+        }
+
+        .encabezado small {
+            color: #39794f;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+        }
+
+        .encabezado h1 {
+            color: #173f2b;
+            font-size: 30px;
+            margin: 12px 0;
+        }
+
+        .encabezado p {
+            color: #69776d;
+            line-height: 1.6;
+        }
+
+        .tarjeta {
+            background: white;
+            border: 1px solid #e1e9e3;
+            border-radius: 14px;
+            padding: 30px;
+            box-shadow: 0 6px 22px rgba(24, 60, 37, 0.05);
+        }
+
+        .identificador {
+            background: #e6f2e9;
+            color: #245b37;
+            padding: 12px 15px;
+            border-radius: 8px;
+            font-size: 14px;
+            margin-bottom: 25px;
+        }
+
+        .grupo {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+        input {
+            width: 100%;
+            padding: 13px;
+            border: 1px solid #d6e0d8;
+            border-radius: 8px;
+            font-size: 15px;
+            background: #fcfdfc;
+        }
+
+        input:focus {
+            outline: 2px solid #b8dfc2;
+            border-color: #39794f;
+        }
+
+        .ayuda {
+            color: #748078;
+            font-size: 12px;
+            margin-top: 7px;
+        }
+
+        .botones {
+            display: flex;
+            gap: 12px;
+            margin-top: 28px;
+            flex-wrap: wrap;
+        }
+
+        button,
+        .cancelar {
+            flex: 1;
+            min-width: 150px;
+            padding: 14px;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: bold;
+            text-align: center;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        button {
+            background: #267345;
+            color: white;
+            border: none;
+        }
+
+        button:hover {
+            background: #1b5934;
+        }
+
+        .cancelar {
+            background: white;
+            color: #526257;
+            border: 1px solid #d6e0d8;
+        }
+
+        .cancelar:hover {
+            background: #f3f6f4;
+        }
+
+        footer {
+            text-align: center;
+            padding: 25px 15px;
+            color: #758178;
+            font-size: 13px;
+            line-height: 1.8;
+        }
+
+        @media (max-width: 600px) {
+            header {
+                padding: 20px 5%;
+            }
+
+            nav a {
+                display: inline-block;
+                margin: 10px 12px 0 0;
+            }
+
+            main {
+                margin: 30px auto;
+            }
+
+            .tarjeta {
+                padding: 22px;
+            }
+
+            .encabezado h1 {
+                font-size: 26px;
+            }
+
+            .botones {
+                flex-direction: column;
+            }
+        }
+    </style>
 </head>
 
 <body>
 
-    <h1>Editar producto</h1>
+    <header>
+        <div>
+            <div class="logo">Practica<span>Flask</span></div>
+            <p>Sistema de gestión de productos</p>
+        </div>
 
-    <form method="POST">
-        <label>Nombre:</label>
-        <input type="text" name="nombre" value="{{ producto[1] }}" required>
-        <br><br>
+        <nav>
+            <a href="/">Inicio</a>
+            <a href="/productos">Productos registrados</a>
+        </nav>
+    </header>
 
-        <label>Precio:</label>
-        <input type="number" name="precio" value="{{ producto[2] }}" min="0.01" step="0.01" required>
-        <br><br>
+    <main>
 
-        <label>Stock:</label>
-        <input type="number" name="stock" value="{{ producto[3] }}" min="0" required>
-        <br><br>
+        <section class="encabezado">
+            <small>Gestión del inventario</small>
+            <h1>Editar producto</h1>
+            <p>
+                Actualiza la información del producto.
+                Los cambios se guardarán en la base de datos.
+            </p>
+        </section>
 
-        <button type="submit">Guardar cambios</button>
-    </form>
+        <section class="tarjeta">
 
-    <p><a href="/productos">Volver a productos</a></p>
+            <div class="identificador">
+                Editando el producto con ID: <strong>{{ producto[0] }}</strong>
+            </div>
+
+            <form action="/editar/{{ producto[0] }}" method="POST">
+
+                <div class="grupo">
+                    <label for="nombre">Nombre del producto</label>
+                    <input
+                        type="text"
+                        id="nombre"
+                        name="nombre"
+                        value="{{ producto[1] }}"
+                        maxlength="255"
+                        required
+                    >
+                </div>
+
+                <div class="grupo">
+                    <label for="precio">Precio</label>
+                    <input
+                        type="number"
+                        id="precio"
+                        name="precio"
+                        value="{{ producto[2] }}"
+                        min="0.01"
+                        step="0.01"
+                        required
+                    >
+                    <p class="ayuda">
+                        El precio debe ser mayor que cero.
+                    </p>
+                </div>
+
+                <div class="grupo">
+                    <label for="stock">Cantidad disponible</label>
+                    <input
+                        type="number"
+                        id="stock"
+                        name="stock"
+                        value="{{ producto[3] }}"
+                        min="0"
+                        step="1"
+                        required
+                    >
+                    <p class="ayuda">
+                        Ingresa un número entero igual o mayor que cero.
+                    </p>
+                </div>
+
+                <div class="botones">
+                    <button type="submit">Guardar cambios</button>
+                    <a class="cancelar" href="/productos">Cancelar</a>
+                </div>
+
+            </form>
+
+        </section>
+
+    </main>
+
 
 </body>
-
 </html>
